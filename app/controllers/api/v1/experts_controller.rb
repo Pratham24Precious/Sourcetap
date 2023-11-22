@@ -39,6 +39,6 @@ class Api::V1::ExpertsController < ApplicationController
   end
 
   def expert_params
-    params.require(:expert).permit(:name, :email, :skills, :experience, :mobile_no, :current_city, :password)
+    params.permit(:name, :email, :skills, :experience, :mobile_no, :current_city, :password)
   end
 end

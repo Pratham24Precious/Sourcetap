@@ -39,6 +39,6 @@ class Api::V1::RecruitersController < ApplicationController
   end
 
   def recruiter_params
-    params.require(:recruiter).permit(:name, :email, :company_name, :city, :mobile_no, :password)
+    params.permit(:name, :email, :company_name, :city, :mobile_no, :password)
   end
 end

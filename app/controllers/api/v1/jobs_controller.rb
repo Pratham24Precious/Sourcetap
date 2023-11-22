@@ -29,21 +29,31 @@ class Api::V1::JobsController < ApplicationController
   end
 
   def update
-    if @job.update(job_params)
-      render json: @job
+    if current_user.is_a?(Recruiter) && @job.recruiter_id == current_user.id
+      if @job.update(job_params)
+        render json: @job
+      else
+        render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: 'You are not authorized to update this job' }, status: :forbidden
     end
   end
 
   def destroy
-    @job.destroy
-    head :no_content
+    if current_user.is_a?(Recruiter) && @job.recruiter_id == current_user.id
+      @job.destroy
+      head :no_content
+    else
+      render json: { error: 'You are not authorized to delete this job' }, status: :forbidden
+    end
   end
 
   def apply
     if current_user.is_a?(Expert)
       @job = Job.find(params[:id])
+
+      @job.experts << current_user
 
       if @job.update(applied: true)
         render json: @job, status: :ok
@@ -54,6 +64,7 @@ class Api::V1::JobsController < ApplicationController
       render json: { error: 'Only experts can apply for jobs' }, status: :forbidden
     end
   end
+
 
   private
 
