@@ -3,17 +3,17 @@ class Api::V1::RecruitersController < ApplicationController
 
   def index
     @recruiters = Recruiter.all
-    render json: @recruiters
+    render json: @recruiters, each_serializer: RecruiterSerializer
   end
 
   def show
-    render json: @recruiter
+    render json: @recruiter, serializer: RecruiterSerializer
   end
 
   def create
     @recruiter = Recruiter.new(recruiter_params)
     if @recruiter.save
-      render json: @recruiter, status: :created
+      render json: @recruiter, status: :created, serializer: RecruiterSerializer
     else
       render json: { errors: @recruiter.errors.full_messages }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::RecruitersController < ApplicationController
 
   def update
     if @recruiter.update(recruiter_params)
-      render json: @recruiter
+      render json: @recruiter, serializer: RecruiterSerializer
     else
       render json: { errors: @recruiter.errors.full_messages }, status: :unprocessable_entity
     end

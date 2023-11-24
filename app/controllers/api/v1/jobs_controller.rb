@@ -4,11 +4,11 @@ class Api::V1::JobsController < ApplicationController
 
   def index
     @jobs = Job.all
-    render json: @jobs
+    render json: @jobs, each_serializer: JobSerializer
   end
 
   def show
-    render json: @job
+    render json: @job, serializer: JobSerializer
   end
 
   def create
@@ -22,7 +22,7 @@ class Api::V1::JobsController < ApplicationController
     end
 
     if @job.save
-      render json: @job, status: :created
+      render json: @job, status: :created, serializer: JobSerializer
     else
       render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class Api::V1::JobsController < ApplicationController
   def update
     if current_user.is_a?(Recruiter) && @job.recruiter_id == current_user.id
       if @job.update(job_params)
-        render json: @job
+        render json: @job, serializer: JobSerializer
       else
         render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
       end
@@ -56,7 +56,7 @@ class Api::V1::JobsController < ApplicationController
       @job.experts << current_user
 
       if @job.update(applied: true)
-        render json: @job, status: :ok
+        render json: @job, status: :ok, serializer: JobSerializer
       else
         render json: { errors: @job.errors.full_messages }, status: :unprocessable_entity
       end
@@ -64,7 +64,6 @@ class Api::V1::JobsController < ApplicationController
       render json: { error: 'Only experts can apply for jobs' }, status: :forbidden
     end
   end
-
 
   private
 
