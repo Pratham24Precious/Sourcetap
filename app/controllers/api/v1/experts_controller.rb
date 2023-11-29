@@ -2,7 +2,12 @@ class Api::V1::ExpertsController < ApplicationController
   before_action :set_expert, only: [:show, :update, :destroy]
 
   def index
-    @experts = Expert.all
+    if params[:query].present?
+      @experts = Expert.search(params[:query], operator: 'or')
+    else
+      @experts = Expert.all
+    end
+
     render json: @experts, each_serializer: ExpertSerializer
   end
 
@@ -30,6 +35,14 @@ class Api::V1::ExpertsController < ApplicationController
   def destroy
     @expert.destroy
     head :no_content
+  end
+
+  def recommended_jobs
+    @expert = Expert.find(params[:id])
+    @recommended_jobs = @expert.recommended_jobs(params[:id])
+    render json: {
+      recommended_jobs: @recommended_jobs
+    }
   end
 
   private

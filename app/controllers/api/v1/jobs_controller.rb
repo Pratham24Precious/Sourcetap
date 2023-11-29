@@ -3,7 +3,12 @@ class Api::V1::JobsController < ApplicationController
   before_action :authorize_request, only: [:create, :update, :destroy, :apply]
 
   def index
-    @jobs = Job.all
+    if params[:query].present?
+      @jobs = Job.search(params[:query], operator: 'or').active.recent
+    else
+      @jobs = Job.active.recent
+    end
+
     render json: @jobs, each_serializer: JobSerializer
   end
 

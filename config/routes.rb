@@ -17,7 +17,12 @@ Rails.application.routes.draw do
         get 'show_experts/:id', to: 'admin_users#show_experts'
       end
 
-      resources :experts, except: [:new, :edit]
+      resources :experts, except: [:new, :edit] do
+        member do
+          get 'recommended_jobs', to: 'experts#recommended_jobs'
+        end
+      end
+
       resources :recruiters, except: [:new, :edit]
       post 'expert_login/login', to: 'expert_login#login'
       post 'expert_login/signup', to: 'expert_login#signup'
