@@ -1,0 +1,485 @@
+---
+openapi: 3.0.1
+info:
+  title: Your API
+  version: v1
+  description: Your API description
+paths:
+  "/api/v1/experts":
+    post:
+      summary: Creates an expert
+      tags:
+      - Experts
+      parameters: []
+      responses:
+        '201':
+          description: expert created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                skills:
+                  type: string
+                experience:
+                  type: integer
+                mobile_no:
+                  type: string
+                current_city:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - skills
+              - experience
+              - mobile_no
+              - current_city
+              - password
+  "/api/v1/experts/{id}":
+    get:
+      summary: Retrieves an expert
+      tags:
+      - Experts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: expert found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  skills:
+                    type: string
+                  experience:
+                    type: integer
+                  mobile_no:
+                    type: string
+                  current_city:
+                    type: string
+                required:
+                - id
+                - name
+                - email
+                - skills
+                - experience
+                - mobile_no
+                - current_city
+        '404':
+          description: expert not found
+    put:
+      summary: Updates an expert
+      tags:
+      - Experts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: expert updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                skills:
+                  type: string
+                experience:
+                  type: integer
+                mobile_no:
+                  type: string
+                current_city:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - skills
+              - experience
+              - mobile_no
+              - current_city
+              - password
+    delete:
+      summary: Deletes an expert
+      tags:
+      - Experts
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: expert deleted
+  "/api/v1/jobs":
+    get:
+      summary: Retrieves a list of jobs
+      tags:
+      - Jobs
+      responses:
+        '200':
+          description: list of jobs retrieved
+    post:
+      summary: Creates a job
+      tags:
+      - Jobs
+      parameters: []
+      responses:
+        '201':
+          description: job created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                skills_required:
+                  type: string
+                experience_level:
+                  type: string
+                location:
+                  type: string
+                salary_range:
+                  type: string
+                application_deadline:
+                  type: string
+                contact_email:
+                  type: string
+                contact_phone:
+                  type: string
+                applied:
+                  type: boolean
+                expert_ids:
+                  type: array
+                  items:
+                    type: integer
+              required:
+              - title
+              - description
+              - skills_required
+              - experience_level
+              - location
+              - salary_range
+              - application_deadline
+              - contact_email
+              - contact_phone
+              - applied
+              - expert_ids
+  "/api/v1/jobs/{id}":
+    get:
+      summary: Retrieves a job
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: job found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  skills_required:
+                    type: string
+                  experience_level:
+                    type: string
+                  location:
+                    type: string
+                  salary_range:
+                    type: string
+                  application_deadline:
+                    type: string
+                  contact_email:
+                    type: string
+                  contact_phone:
+                    type: string
+                  applied:
+                    type: boolean
+                  recruiter_id:
+                    type: integer
+                required:
+                - id
+                - title
+                - description
+                - skills_required
+                - experience_level
+                - location
+                - salary_range
+                - application_deadline
+                - contact_email
+                - contact_phone
+                - applied
+                - recruiter_id
+        '404':
+          description: job not found
+    put:
+      summary: Updates a job
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: job updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                skills_required:
+                  type: string
+                experience_level:
+                  type: string
+                location:
+                  type: string
+                salary_range:
+                  type: string
+                application_deadline:
+                  type: string
+                contact_email:
+                  type: string
+                contact_phone:
+                  type: string
+                applied:
+                  type: boolean
+                expert_ids:
+                  type: array
+                  items:
+                    type: integer
+    delete:
+      summary: Deletes a job
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: job deleted
+        '404':
+          description: job not found
+  "/api/v1/jobs/{id}/apply":
+    post:
+      summary: Applies for a job
+      tags:
+      - Jobs
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: job applied
+        '404':
+          description: job not found
+        '403':
+          description: forbidden
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expert_id:
+                  type: integer
+              required:
+              - expert_id
+  "/api/v1/recruiters":
+    post:
+      summary: Creates a recruiter
+      tags:
+      - Recruiters
+      parameters: []
+      responses:
+        '201':
+          description: recruiter created
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                company_name:
+                  type: string
+                city:
+                  type: string
+                mobile_no:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - company_name
+              - city
+              - mobile_no
+              - password
+  "/api/v1/recruiters/{id}":
+    get:
+      summary: Retrieves a recruiter
+      tags:
+      - Recruiters
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: recruiter found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  company_name:
+                    type: string
+                  city:
+                    type: string
+                  mobile_no:
+                    type: string
+                required:
+                - id
+                - name
+                - email
+                - company_name
+                - city
+                - mobile_no
+        '404':
+          description: recruiter not found
+    put:
+      summary: Updates a recruiter
+      tags:
+      - Recruiters
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: recruiter updated
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                company_name:
+                  type: string
+                city:
+                  type: string
+                mobile_no:
+                  type: string
+                password:
+                  type: string
+              required:
+              - name
+              - email
+              - company_name
+              - city
+              - mobile_no
+              - password
+    delete:
+      summary: Deletes a recruiter
+      tags:
+      - Recruiters
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: recruiter deleted
+servers:
+- url: http://localhost:3000
+  variables:
+    defaultHost:
+      default: localhost:3000
